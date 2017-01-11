@@ -1,6 +1,7 @@
 #Unexpected (only for me?) ScalaC behavior
 This is a recreation of an issue I saw while trying to migrate a codebase from `maven` to `bazel`. One of the main focuses of this migration is to try to **minimize** the dependencies each class needs for compilation so that builds will be triggered only when needed.   
 Unfortunately what I saw is that given `ClassIndirectlyNeedingFoo`(uses)->`ClassUsingFoo`(uses)->`Supplier` the compilation of `ClassIndirectlyNeedingFoo` breaks if `Supplier` is not on the classpath.    
+Just to be clear `Supplier` isn't in the bytecode or source-code of `ClassIndirectlyNeedingFoo`.
 
 #To recreate:
 ```shell
