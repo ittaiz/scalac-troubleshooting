@@ -50,7 +50,61 @@ scalac -classpath ../../../direct.jar com/wix/indirect_scala/ClassIndirectlyNeed
 #Passes
 ```
 
-
+Expanded error when running with `debug` flag:     
+[running phase parser on ClassIndirectlyNeedingFoo.scala]
+[running phase namer on ClassIndirectlyNeedingFoo.scala]
+[running phase packageobjects on ClassIndirectlyNeedingFoo.scala]
+[running phase typer on ClassIndirectlyNeedingFoo.scala]
+[running phase patmat on ClassIndirectlyNeedingFoo.scala]
+[running phase superaccessors on ClassIndirectlyNeedingFoo.scala]
+[running phase extmethods on ClassIndirectlyNeedingFoo.scala]
+[running phase pickler on ClassIndirectlyNeedingFoo.scala]
+[running phase refchecks on ClassIndirectlyNeedingFoo.scala]
+[running phase uncurry on ClassIndirectlyNeedingFoo.scala]
+[running phase tailcalls on ClassIndirectlyNeedingFoo.scala]
+[running phase specialize on ClassIndirectlyNeedingFoo.scala]
+[running phase explicitouter on ClassIndirectlyNeedingFoo.scala]
+[running phase erasure on ClassIndirectlyNeedingFoo.scala]
+warning: !!! creating stub symbol to defer error: missing or invalid dependency detected while loading class file 'ClassUsingFoo.class'.
+Could not access term foo in package class com,
+because it (or its dependencies) are missing. Check your build definition for
+missing or conflicting dependencies. (Re-run with `-Ylog-classpath` to see the problematic classpath.)
+A full rebuild may help if 'ClassUsingFoo.class' was compiled against an incompatible version of com.
+error: missing or invalid dependency detected while loading class file 'ClassUsingFoo.class'.
+Could not access term foo in package class com,
+because it (or its dependencies) are missing. Check your build definition for
+missing or conflicting dependencies. (Re-run with `-Ylog-classpath` to see the problematic classpath.)
+A full rebuild may help if 'ClassUsingFoo.class' was compiled against an incompatible version of com.
+java.lang.Throwable
+	at scala.reflect.internal.Symbols$StubSymbol$class.fail(Symbols.scala:3481)
+	at scala.reflect.internal.Symbols$StubSymbol$class.info(Symbols.scala:3492)
+	at scala.reflect.internal.Symbols$StubTermSymbol.info(Symbols.scala:3498)
+	at scala.reflect.internal.Symbols$StubTermSymbol.info(Symbols.scala:3498)
+	at scala.reflect.internal.pickling.UnPickler$Scan.scala$reflect$internal$pickling$UnPickler$Scan$$nestedObjectSymbol$1(UnPickler.scala:230)
+	at scala.reflect.internal.pickling.UnPickler$Scan.readExtSymbol$1(UnPickler.scala:258)
+	at scala.reflect.internal.pickling.UnPickler$Scan.readSymbol(UnPickler.scala:284)
+	at scala.reflect.internal.pickling.UnPickler$Scan.readSymbolRef(UnPickler.scala:649)
+	at scala.reflect.internal.pickling.UnPickler$Scan.readThisType$1(UnPickler.scala:398)
+	at scala.reflect.internal.pickling.UnPickler$Scan.readType(UnPickler.scala:413)
+	at scala.reflect.internal.pickling.UnPickler$Scan$$anonfun$readTypeRef$1.apply(UnPickler.scala:658)
+	at scala.reflect.internal.pickling.UnPickler$Scan$$anonfun$readTypeRef$1.apply(UnPickler.scala:658)
+	at scala.reflect.internal.pickling.UnPickler$Scan.at(UnPickler.scala:179)
+	at scala.reflect.internal.pickling.UnPickler$Scan.readTypeRef(UnPickler.scala:658)
+	at scala.reflect.internal.pickling.UnPickler$Scan.readType(UnPickler.scala:417)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef$$anonfun$6.apply(UnPickler.scala:725)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef$$anonfun$6.apply(UnPickler.scala:725)
+	at scala.reflect.internal.pickling.UnPickler$Scan.at(UnPickler.scala:179)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.completeInternal(UnPickler.scala:725)
+	at scala.reflect.internal.pickling.UnPickler$Scan$LazyTypeRef.complete(UnPickler.scala:749)
+	at scala.reflect.internal.Symbols$Symbol.info(Symbols.scala:1514)
+	at scala.reflect.internal.Symbols$Symbol.tpe_$times(Symbols.scala:1478)
+	at scala.reflect.internal.Symbols$Symbol.tpe(Symbols.scala:1443)
+	at scala.reflect.internal.Types$$anonfun$45.apply(Types.scala:4577)
+	at scala.reflect.internal.Types$$anonfun$45.apply(Types.scala:4577)
+	at scala.reflect.internal.util.Collections$class.mapList(Collections.scala:52)
+	at scala.reflect.internal.SymbolTable.mapList(SymbolTable.scala:16)
+	at scala.tools.nsc.transform.SpecializeTypes.specialized
+```
 
 
 By the way the above was run using Scala 2.11.7; To verify this isn't a solved issue I upgraded via brew to 2.12.1 and recreated-
