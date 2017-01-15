@@ -3,6 +3,10 @@ This is a recreation of an issue I saw while trying to migrate a codebase from `
 Unfortunately what I saw is that given `ClassIndirectlyNeedingFoo`(uses)->`ClassUsingFoo`(uses)->`Supplier` the compilation of `ClassIndirectlyNeedingFoo` breaks if `Supplier` is not on the classpath.    
 Just to be clear `Supplier` isn't in the bytecode or source-code of `ClassIndirectlyNeedingFoo`.
 
+#Update:
+So the short answer is that `Why` this is happening isn't totally clear to [anyone](https://github.com/scalacenter/advisoryboard/blob/master/proposals/009-improve-direct-dependency-experience.md#proposal) (see proposal #4) . What is clear is that it's known scalac sometimes needs more dependencies than one would think and it's also clear that sometimes when this happens it's a bug.
+For more info read my SO [answer](http://stackoverflow.com/questions/41600346/why-does-scalac-need-a-transitive-dependency-on-the-classpath)
+
 #To recreate:
 ```shell
 #When in the root of this repository:
