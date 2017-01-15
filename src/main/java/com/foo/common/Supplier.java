@@ -1,5 +1,5 @@
 package com.foo.common;
 
-public interface Supplier<T> {
-    T get();
+public interface Supplier {
+    String get();
 }
